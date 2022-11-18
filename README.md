@@ -7,5 +7,5 @@ Simple bash script to automate the installation of Docker on Debian-based server
 You can either download the script and run it manually, or use the following command:
 
 ```
-wget -qO- https://raw.githubusercontent.com/JaccoR/dockerinstallscript/main/dockeraise.sh | bash
+wget -qO- https://raw.githubusercontent.com/JaccoR/dockerinstallscript/main/dockerinstallscript.sh | bash
 ```
