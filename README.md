@@ -1,4 +1,4 @@
-# Dockeraise
+# Docker Install Script
 
 Raise a full Docker setup in your server in seconds!
 
