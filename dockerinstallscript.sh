@@ -52,37 +52,34 @@ echo -e "${msg} Docker successfully installed:" $(docker --version)
 
 
 # Install Docker Compose
-while true; do
-    read -p "${ask} Do you want to install Docker-Compose? [y/n] " yn
-    case $yn in
-        [Yy]* ) echo -e "${info} Installing Docker-Compose (this might take a while)...";
-               apt-get install -y docker-compose  &> /dev/null;
-               echo -e "${msg} Docker Compose successfully installed:" $(docker-compose --version);
-               break;;
-        [Nn]* ) break;;
-        * ) ;;
-    esac
-done
+read -p "${ask} Do you want to install Docker-Compose? [y/n] " yn
+case $yn in
+  [Yy]* ) echo -e "${info} Installing Docker-Compose (this might take a while)...";
+         apt-get install -y docker-compose  &> /dev/null;
+         echo -e "${msg} Docker Compose successfully installed:" $(docker-compose --version);
+         break;;
+  [Nn]* ) break;;
+  * ) ;;
+esac
 
 # Create Docker user
-while true; do
-    read -p "${ask} Do you want to create a Docker user? [y/n] " yn
-    case $yn in
-        [Yy]* ) while :; do
-                read -p "Please choose an ID for the new user/group: " id;
-                if [[ id "$id" &>/dev/null ]]; then
-                        echo -e "${err} An user with the same ID already exists.";
-                        continue;
-                else
-                        /usr/sbin/groupadd -g $id dockeruser && /usr/sbin/useradd dockeruser -u $id -g $id -m -s /bin/bash && echo -e "${add} Docker user created:" && id dockeruser; 
-                        break;
-                fi
-        done
-               break;;
-        [Nn]* ) break;;
-        * ) ;;
-    esac
-done
+
+read -p "${ask} Do you want to create a Docker user? [y/n] " yn
+case $yn in
+  [Yy]* ) while :; do
+          read -p "Please choose an ID for the new user/group: " id;
+          if [[ id "$id" &>/dev/null ]]; then
+                  echo -e "${err} An user with the same ID already exists.";
+                  continue;
+          else
+                  /usr/sbin/groupadd -g $id dockeruser && /usr/sbin/useradd dockeruser -u $id -g $id -m -s /bin/bash && echo -e "${add} Docker user created:" && id dockeruser; 
+                  break;
+          fi
+  done
+         break;;
+  [Nn]* ) break;;
+  * ) ;;
+esac
 
 # Enable Docker service at startup
 echo -e "${info} Starting Docker services..."
