@@ -12,14 +12,14 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Check if Docker is already installed
-if [[ "$(command -v docker)" -ne "" ]]; then
+if [ -x "$(command -v docker)" ]; then
         echo -e "${err} Docker is already installed."
         exit 1;
 fi
 
 # Check if machine is Debian-based
 if [[ "$(command -v apt)" == "" ]]; then
-        echo -e "${err} This script only works on Debian-based machines, sorry!"
+        echo -e "${err} This script only works on Debian-based machines."
         exit 1;
 fi
 
@@ -53,7 +53,7 @@ echo -e "${msg} Docker successfully installed:" $(docker --version)
 
 # Install Docker Compose
 while true; do
-    read -p "${ask} Do you want to install Docker-Compose? [y/n] " yn
+    read -p $'\033[1;35m[?]\033[m Do you want to install Docker-Compose? [y/n]' yn
     case $yn in
         [Yy]* ) echo -e "${info} Installing Docker-Compose (this might take a while)...";
                apt-get install -y docker-compose  &> /dev/null;
@@ -66,11 +66,11 @@ done
 
 # Create Docker user
 while true; do
-    read -p "${ask} Do you want to create a Docker user? [y/n] " yn
+    read -p  $'\033[1;35m[?]\033[m Do you want to create a Docker user? [y/n] ' yn
     case $yn in
         [Yy]* ) while :; do
-                read -p "Please choose an ID for the new user/group: " id;
-                if [[ id "$id" &>/dev/null ]]; then
+                read -p  $'\033[1;35m[?]\033[m Please choose an ID for the new user/group: ' id;
+                if id "$id" &>/dev/null; then
                         echo -e "${err} An user with the same ID already exists.";
                         continue;
                 else
